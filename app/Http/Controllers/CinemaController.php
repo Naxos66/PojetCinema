@@ -6,6 +6,7 @@ use App\Http\Requests\CinemaStoreRequest;
 use App\Http\Requests\CinemaUpdateRequest;
 use App\Http\Resources\CinemaCollection;
 use App\Http\Resources\CinemaResource;
+
 use App\Models\Cinema;
 use Illuminate\Http\Request;
 
@@ -15,32 +16,40 @@ class CinemaController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \App\Http\Resources\CinemaCollection
      */
-    public function index(Request $request)
+    public function index()
     {
-        $cinemas = Cinema::all();
-
-        return new CinemaCollection($cinemas);
+        $cinemas = Cinema::paginate(10);
+        return view('cinemas/index',compact('cinemas'));
     }
-
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('cinemas/create');
+    }
     /**
      * @param \App\Http\Requests\CinemaStoreRequest $request
      * @return \App\Http\Resources\CinemaResource
+     * @return \Illuminate\Http\Response
      */
-    public function store(CinemaStoreRequest $request)
+    public function store(Request $request)
     {
-        $cinema = Cinema::create($request->validated());
-
-        return new CinemaResource($cinema);
+        Cinema::create($request->all());
+        return redirect()->route('cinemas.index')->with('info', 'Le cinéma a bien été créé');
     }
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Cinema $cinema
+     * @param \App\Models\Cinema $cinemas
      * @return \App\Http\Resources\CinemaResource
      */
-    public function show(Request $request, Cinema $cinema)
+    public function show(Cinema $cinemas)
     {
-        return new CinemaResource($cinema);
+        $cinema=Cinema::all();
+        return view('cinemas.show');
     }
 
     /**
