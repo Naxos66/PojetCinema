@@ -3,24 +3,30 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+use App\Models\Cinema;
+use App\Models\Salle;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Salle>
- */
 class SalleFactory extends Factory
 {
-    static int $number = 0;
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Salle::class;
+
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function definition()
     {
-        
         return [
-            'number'=> self::$number++,
-            'places'=> 100,            
+            'number' => $this->faker->numberBetween(1, 100),
+            'places' => $this->faker->numberBetween(10, 100),
+            'cinema_id' => Cinema::factory(),
         ];
     }
 }

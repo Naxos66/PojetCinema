@@ -2,85 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FriandiseStoreRequest;
+use App\Http\Requests\FriandiseUpdateRequest;
+use App\Http\Resources\FriandiseCollection;
+use App\Http\Resources\FriandiseResource;
 use App\Models\Friandise;
-use App\Http\Requests\StoreFriandiseRequest;
-use App\Http\Requests\UpdateFriandiseRequest;
+use Illuminate\Http\Request;
 
 class FriandiseController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \App\Http\Resources\FriandiseCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $friandises = Friandise::all();
+
+        return new FriandiseCollection($friandises);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\FriandiseStoreRequest $request
+     * @return \App\Http\Resources\FriandiseResource
      */
-    public function create()
+    public function store(FriandiseStoreRequest $request)
     {
-        //
+        $friandise = Friandise::create($request->validated());
+
+        return new FriandiseResource($friandise);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreFriandiseRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Friandise $friandise
+     * @return \App\Http\Resources\FriandiseResource
      */
-    public function store(StoreFriandiseRequest $request)
+    public function show(Request $request, Friandise $friandise)
     {
-        //
+        return new FriandiseResource($friandise);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Friandise  $friandise
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\FriandiseUpdateRequest $request
+     * @param \App\Models\Friandise $friandise
+     * @return \App\Http\Resources\FriandiseResource
      */
-    public function show(Friandise $friandise)
+    public function update(FriandiseUpdateRequest $request, Friandise $friandise)
     {
-        //
+        $friandise->update($request->validated());
+
+        return new FriandiseResource($friandise);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Friandise  $friandise
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Friandise $friandise
      * @return \Illuminate\Http\Response
      */
-    public function edit(Friandise $friandise)
+    public function destroy(Request $request, Friandise $friandise)
     {
-        //
-    }
+        $friandise->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateFriandiseRequest  $request
-     * @param  \App\Models\Friandise  $friandise
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateFriandiseRequest $request, Friandise $friandise)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Friandise  $friandise
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Friandise $friandise)
-    {
-        //
+        return response()->noContent();
     }
 }

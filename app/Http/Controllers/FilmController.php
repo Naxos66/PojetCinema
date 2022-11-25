@@ -2,85 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilmStoreRequest;
+use App\Http\Requests\FilmUpdateRequest;
+use App\Http\Resources\FilmCollection;
+use App\Http\Resources\FilmResource;
 use App\Models\Film;
-use App\Http\Requests\StoreFilmRequest;
-use App\Http\Requests\UpdateFilmRequest;
+use Illuminate\Http\Request;
 
 class FilmController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \App\Http\Resources\FilmCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $films = Film::all();
+
+        return new FilmCollection($films);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\FilmStoreRequest $request
+     * @return \App\Http\Resources\FilmResource
      */
-    public function create()
+    public function store(FilmStoreRequest $request)
     {
-        //
+        $film = Film::create($request->validated());
+
+        return new FilmResource($film);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreFilmRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Film $film
+     * @return \App\Http\Resources\FilmResource
      */
-    public function store(StoreFilmRequest $request)
+    public function show(Request $request, Film $film)
     {
-        //
+        return new FilmResource($film);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Film  $film
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\FilmUpdateRequest $request
+     * @param \App\Models\Film $film
+     * @return \App\Http\Resources\FilmResource
      */
-    public function show(Film $film)
+    public function update(FilmUpdateRequest $request, Film $film)
     {
-        //
+        $film->update($request->validated());
+
+        return new FilmResource($film);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Film  $film
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Film $film
      * @return \Illuminate\Http\Response
      */
-    public function edit(Film $film)
+    public function destroy(Request $request, Film $film)
     {
-        //
-    }
+        $film->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateFilmRequest  $request
-     * @param  \App\Models\Film  $film
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateFilmRequest $request, Film $film)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Film  $film
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Film $film)
-    {
-        //
+        return response()->noContent();
     }
 }

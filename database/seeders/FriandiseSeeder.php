@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Friandise;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class FriandiseSeeder extends Seeder
@@ -15,6 +14,6 @@ class FriandiseSeeder extends Seeder
      */
     public function run()
     {
-        Friandise::factory(20)->create();
+        Friandise::factory()->count(5)->create();
     }
 }

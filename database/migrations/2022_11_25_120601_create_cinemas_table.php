@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateCinemasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::create('cinemas', function (Blueprint $table) {
             $table->id();
-            $table->string('name',100);
-            $table->string('address',115);
-            $table->string('city',60);
-            $table->string('zipcode',5);
-            $table->string('phone',10);
-            $table->string('email',100);
+            $table->string('name')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('zipcode')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -34,4 +38,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('cinemas');
     }
-};
+}

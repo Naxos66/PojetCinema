@@ -9,10 +9,36 @@ class Cinema extends Model
 {
     use HasFactory;
 
-    public function salles(){
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'address',
+        'city',
+        'zipcode',
+        'phone',
+        'email',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'integer',
+    ];
+
+    public function salles()
+    {
         return $this->hasMany(Salle::class);
     }
-    public function friandises(){
+
+    public function friandises()
+    {
         return $this->belongsToMany(Friandise::class);
     }
 }

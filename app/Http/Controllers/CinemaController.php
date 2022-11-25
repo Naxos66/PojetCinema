@@ -2,85 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CinemaStoreRequest;
+use App\Http\Requests\CinemaUpdateRequest;
+use App\Http\Resources\CinemaCollection;
+use App\Http\Resources\CinemaResource;
 use App\Models\Cinema;
-use App\Http\Requests\StoreCinemaRequest;
-use App\Http\Requests\UpdateCinemaRequest;
+use Illuminate\Http\Request;
 
 class CinemaController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \App\Http\Resources\CinemaCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $cinemas = Cinema::all();
+
+        return new CinemaCollection($cinemas);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\CinemaStoreRequest $request
+     * @return \App\Http\Resources\CinemaResource
      */
-    public function create()
+    public function store(CinemaStoreRequest $request)
     {
-        //
+        $cinema = Cinema::create($request->validated());
+
+        return new CinemaResource($cinema);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreCinemaRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Cinema $cinema
+     * @return \App\Http\Resources\CinemaResource
      */
-    public function store(StoreCinemaRequest $request)
+    public function show(Request $request, Cinema $cinema)
     {
-        //
+        return new CinemaResource($cinema);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Cinema  $cinema
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\CinemaUpdateRequest $request
+     * @param \App\Models\Cinema $cinema
+     * @return \App\Http\Resources\CinemaResource
      */
-    public function show(Cinema $cinema)
+    public function update(CinemaUpdateRequest $request, Cinema $cinema)
     {
-        //
+        $cinema->update($request->validated());
+
+        return new CinemaResource($cinema);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Cinema  $cinema
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Cinema $cinema
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cinema $cinema)
+    public function destroy(Request $request, Cinema $cinema)
     {
-        //
-    }
+        $cinema->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateCinemaRequest  $request
-     * @param  \App\Models\Cinema  $cinema
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateCinemaRequest $request, Cinema $cinema)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Cinema  $cinema
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Cinema $cinema)
-    {
-        //
+        return response()->noContent();
     }
 }

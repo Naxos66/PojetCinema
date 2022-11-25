@@ -2,85 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SalleStoreRequest;
+use App\Http\Requests\SalleUpdateRequest;
+use App\Http\Resources\SalleCollection;
+use App\Http\Resources\SalleResource;
 use App\Models\Salle;
-use App\Http\Requests\StoreSalleRequest;
-use App\Http\Requests\UpdateSalleRequest;
+use Illuminate\Http\Request;
 
 class SalleController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \App\Http\Resources\SalleCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $salles = Salle::all();
+
+        return new SalleCollection($salles);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\SalleStoreRequest $request
+     * @return \App\Http\Resources\SalleResource
      */
-    public function create()
+    public function store(SalleStoreRequest $request)
     {
-        //
+        $salle = Salle::create($request->validated());
+
+        return new SalleResource($salle);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreSalleRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Salle $salle
+     * @return \App\Http\Resources\SalleResource
      */
-    public function store(StoreSalleRequest $request)
+    public function show(Request $request, Salle $salle)
     {
-        //
+        return new SalleResource($salle);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Salle  $salle
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\SalleUpdateRequest $request
+     * @param \App\Models\Salle $salle
+     * @return \App\Http\Resources\SalleResource
      */
-    public function show(Salle $salle)
+    public function update(SalleUpdateRequest $request, Salle $salle)
     {
-        //
+        $salle->update($request->validated());
+
+        return new SalleResource($salle);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Salle  $salle
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Salle $salle
      * @return \Illuminate\Http\Response
      */
-    public function edit(Salle $salle)
+    public function destroy(Request $request, Salle $salle)
     {
-        //
-    }
+        $salle->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateSalleRequest  $request
-     * @param  \App\Models\Salle  $salle
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateSalleRequest $request, Salle $salle)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Salle  $salle
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Salle $salle)
-    {
-        //
+        return response()->noContent();
     }
 }

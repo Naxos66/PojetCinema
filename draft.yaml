@@ -1,0 +1,71 @@
+models:
+  Reservation:
+    name: string nullable
+    quantity: string nullable
+    total_price: decimal:4,2 nullable
+    date_order: dateTime nullable
+    email: string nullable
+    phone: string nullable
+    seance_id: id foreign
+    user_id: id foreign
+
+  Friandise:
+    name: string nullable
+    price: decimal:5,2 nullable
+    relationships:
+      belongstoMany: Cinema
+
+  Seance:
+    date: dateTime nullable
+    price: decimal:3,2
+    salle_id: id foreign
+    film_id: id foreign
+    relationships:
+      hasMany: Reservation
+
+  Film:
+    title: string nullable
+    time: smallinteger nullable
+    relationships:
+      hasMany: Seance
+
+  Salle:
+    number: integer nullable
+    places: integer nullable
+    cinema_id: id foreign
+    relationships:
+      hasMany: Seance
+
+
+  Cinema:
+    name: string nullable
+    address: string nullable
+    city: string nullable
+    zipcode: string nullable
+    phone: string nullable
+    email: string nullable
+    relationships:
+      hasMany: Salle
+      belongstoMany: Friandise
+
+controllers:
+  Reservation:
+    resource: api
+  Film:
+    resource: api
+  Cinema:
+    resource: api
+  Salle:
+    resource: api
+  Seance:
+    resource: api
+  Friandise:
+    resource: api
+
+seeders:
+  Reservation,
+  Film,
+  Cinema,
+  Salle,
+  Seance,
+  Friandise

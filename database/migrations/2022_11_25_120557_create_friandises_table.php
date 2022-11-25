@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateFriandisesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::create('friandises', function (Blueprint $table) {
             $table->id();
-            $table->string('name',100);
-            $table->decimal('price',5,2);
+            $table->string('name')->nullable();
+            $table->decimal('price', 5, 2)->nullable();
             $table->timestamps();
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -30,4 +34,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('friandises');
     }
-};
+}

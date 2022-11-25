@@ -9,7 +9,28 @@ class Film extends Model
 {
     use HasFactory;
 
-    public function seances(){
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+        'time',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'integer',
+        'time' => 'integer',
+    ];
+
+    public function seances()
+    {
         return $this->hasMany(Seance::class);
     }
 }
