@@ -17,7 +17,7 @@ class CinemaFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "name"=> faker()-> name()
         ];
     }
 }
