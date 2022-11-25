@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Cinema extends Model
 {
     use HasFactory;
+
+    public function salles(){
+        return $this->hasMany(Salle::class);
+    }
+    public function friandises(){
+        return $this->belongsToMany(Friandise::class);
+    }
 }
