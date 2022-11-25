@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Faker\Provider\bg_BG\PhoneNumber;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,8 @@ class CinemaFactory extends Factory
     public function definition()
     {
         return [
-            "name"=> faker()-> name()
+            "name"=> faker()-> name(),
+            "phone"=>faker()->phone()
         ];
     }
 }
