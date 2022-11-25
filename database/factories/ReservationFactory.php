@@ -32,7 +32,7 @@ class ReservationFactory extends Factory
             'email' => $this->faker->safeEmail,
             'phone' => $this->faker->e164PhoneNumber,
             'seance_id' => Seance::factory(),
-            'user_id' => User::factory(),
+            'user_id' => User::factory()
         ];
     }
 }

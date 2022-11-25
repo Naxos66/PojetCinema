@@ -26,7 +26,7 @@ class SalleFactory extends Factory
         return [
             'number' => $this->faker->numberBetween(1, 100),
             'places' => $this->faker->numberBetween(10, 100),
-            'cinema_id' => Cinema::factory(),
+            'cinema_id' => Cinema::factory()
         ];
     }
 }

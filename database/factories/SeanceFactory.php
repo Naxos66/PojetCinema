@@ -28,7 +28,7 @@ class SeanceFactory extends Factory
             'date' => $this->faker->dateTime(),
             'price' => $this->faker->randomFloat(2, 0, 9.99),
             'salle_id' => Salle::factory(),
-            'film_id' => Film::factory(),
+            'film_id' => Film::factory()
         ];
     }
 }

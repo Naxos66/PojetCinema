@@ -28,7 +28,7 @@ class CinemaFactory extends Factory
             'city' => $this->faker->city,
             'zipcode' => $this->faker->postcode,
             'phone' => $this->faker->e164PhoneNumber,
-            'email' => $this->faker->safeEmail,
+            'email' => $this->faker->safeEmail
         ];
     }
 }

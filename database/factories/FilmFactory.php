@@ -24,7 +24,7 @@ class FilmFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(4),
-            'time' => $this->faker->numberBetween(100, 250),
+            'time' => $this->faker->numberBetween(100, 250)
         ];
     }
 }

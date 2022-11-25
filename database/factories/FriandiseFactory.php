@@ -24,7 +24,7 @@ class FriandiseFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'price' => $this->faker->randomFloat(2, 0, 9.99),
+            'price' => $this->faker->randomFloat(2, 0, 9.99)
         ];
     }
 }
