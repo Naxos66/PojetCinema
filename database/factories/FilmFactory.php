@@ -16,9 +16,10 @@ class FilmFactory extends Factory
      */
     public function definition()
     {
-        return [
+        return 
+        [
             "name"=>fake()->title(),
-            "time"=>fake()->
-        ];
+            "time"=>fake()->;
+        ]
     }
 }
