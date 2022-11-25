@@ -11,13 +11,14 @@ created:
     - database/factories/FilmFactory.php
     - database/factories/SalleFactory.php
     - database/factories/CinemaFactory.php
-    - database/migrations/2022_11_25_120556_create_reservations_table.php
-    - database/migrations/2022_11_25_120557_create_friandises_table.php
-    - database/migrations/2022_11_25_120558_create_seances_table.php
-    - database/migrations/2022_11_25_120559_create_films_table.php
-    - database/migrations/2022_11_25_120600_create_salles_table.php
-    - database/migrations/2022_11_25_120601_create_cinemas_table.php
-    - database/migrations/2022_11_25_120602_create_cinema_friandise_table.php
+    - database/migrations/2022_11_25_123624_create_reservations_table.php
+    - database/migrations/2022_11_25_123625_create_friandises_table.php
+    - database/migrations/2022_11_25_123626_create_seances_table.php
+    - database/migrations/2022_11_25_123627_create_films_table.php
+    - database/migrations/2022_11_25_123628_create_salles_table.php
+    - database/migrations/2022_11_25_123629_create_cinemas_table.php
+    - database/migrations/2022_11_25_123630_create_friandise_reservation_table.php
+    - database/migrations/2022_11_25_123631_create_cinema_friandise_table.php
     - app/Models/Reservation.php
     - app/Models/Friandise.php
     - app/Models/Seance.php
@@ -40,8 +41,8 @@ updated:
     - routes/api.php
 models:
     User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string:100 nullable' }
-    Reservation: { name: 'string nullable', quantity: 'string nullable', total_price: 'decimal:4,2 nullable', date_order: 'dateTime nullable', email: 'string nullable', phone: 'string nullable', seance_id: 'id foreign', user_id: 'id foreign' }
-    Friandise: { name: 'string nullable', price: 'decimal:5,2 nullable', relationships: { belongstoMany: Cinema } }
+    Reservation: { name: 'string nullable', quantity: 'string nullable', total_price: 'decimal:4,2 nullable', date_order: 'dateTime nullable', email: 'string nullable', phone: 'string nullable', seance_id: 'id foreign', user_id: 'id foreign', relationships: { belongstoMany: Friandise } }
+    Friandise: { name: 'string nullable', price: 'decimal:5,2 nullable', relationships: { belongstoMany: 'Cinema, Reservation' } }
     Seance: { date: 'dateTime nullable', price: 'decimal:3,2', salle_id: 'id foreign', film_id: 'id foreign', relationships: { hasMany: Reservation } }
     Film: { title: 'string nullable', time: 'smallinteger nullable', relationships: { hasMany: Seance } }
     Salle: { number: 'integer nullable', places: 'integer nullable', cinema_id: 'id foreign', relationships: { hasMany: Seance } }

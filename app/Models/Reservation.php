@@ -38,6 +38,11 @@ class Reservation extends Model
         'user_id' => 'integer',
     ];
 
+    public function friandises()
+    {
+        return $this->belongsToMany(Friandise::class);
+    }
+
     public function seance()
     {
         return $this->belongsTo(Seance::class);

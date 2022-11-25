@@ -8,12 +8,14 @@ models:
     phone: string nullable
     seance_id: id foreign
     user_id: id foreign
+    relationships:
+        belongstoMany: Friandise
 
   Friandise:
     name: string nullable
     price: decimal:5,2 nullable
     relationships:
-      belongstoMany: Cinema
+      belongstoMany: Cinema, Reservation
 
   Seance:
     date: dateTime nullable

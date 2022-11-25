@@ -33,4 +33,9 @@ class Friandise extends Model
     {
         return $this->belongsToMany(Cinema::class);
     }
+
+    public function reservations()
+    {
+        return $this->belongsToMany(Reservation::class);
+    }
 }
