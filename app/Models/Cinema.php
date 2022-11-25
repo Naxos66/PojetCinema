@@ -20,7 +20,7 @@ class Cinema extends Model
         'city',
         'zipcode',
         'phone',
-        'email',
+        'email'
     ];
 
     /**
