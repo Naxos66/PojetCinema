@@ -18,7 +18,7 @@ class SallePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class SallePolicy
      */
     public function view(User $user, Salle $salle)
     {
-        //
+        return true;
     }
 
     /**
@@ -41,7 +41,7 @@ class SallePolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class SallePolicy
      */
     public function update(User $user, Salle $salle)
     {
-        //
+        return true;
     }
 
     /**
@@ -65,7 +65,7 @@ class SallePolicy
      */
     public function delete(User $user, Salle $salle)
     {
-        //
+        return true;
     }
 
     /**

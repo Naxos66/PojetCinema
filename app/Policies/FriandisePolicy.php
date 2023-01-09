@@ -18,7 +18,7 @@ class FriandisePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class FriandisePolicy
      */
     public function view(User $user, Friandise $friandise)
     {
-        //
+        return true;
     }
 
     /**
@@ -41,7 +41,7 @@ class FriandisePolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class FriandisePolicy
      */
     public function update(User $user, Friandise $friandise)
     {
-        //
+        return true;
     }
 
     /**
@@ -65,7 +65,7 @@ class FriandisePolicy
      */
     public function delete(User $user, Friandise $friandise)
     {
-        //
+        return true;
     }
 
     /**
