@@ -48,8 +48,7 @@ class CinemaController extends Controller
      */
     public function show(Cinema $cinemas)
     {
-        $cinema=Cinema::all();
-        return view('cinemas.show');
+        return view('show', compact('cinemas'));
     }
 
     /**
@@ -59,8 +58,7 @@ class CinemaController extends Controller
      */
     public function update(CinemaUpdateRequest $request, Cinema $cinema)
     {
-        $cinema->update($request->validated());
-
+        $cinema->update($request->all());
         return new CinemaResource($cinema);
     }
 
