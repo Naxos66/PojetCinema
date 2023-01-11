@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use App\Models\Cinema;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\CinemaResource;
+use App\Http\Resources\CinemaCollection;
+use App\Http\Requests\CinemaUpdateRequest;
 
 class CinemaController extends Controller
 {
@@ -12,10 +18,16 @@ class CinemaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request): CinemaCollection
     {
-        //
+        $queryItems = [];
+        if (count($queryItems) == 0) {
+            return new CinemaCollection(Cinema::paginate());
+        } else {
+            return new CinemaCollection(Cinema::where($queryItems)->paginate());
+        }
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -25,7 +37,8 @@ class CinemaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cinema = Cinema::create($request->validated());
+        return new CinemaResource($cinema);
     }
 
     /**
@@ -34,9 +47,9 @@ class CinemaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Cinema $cinema): CinemaResource
     {
-        //
+        return new CinemaResource($cinema);
     }
 
     /**
@@ -46,9 +59,10 @@ class CinemaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CinemaUpdateRequest $request, Cinema $cinema): JsonResponse|CinemaResource
     {
-        //
+        $cinema->update($request->validated());
+        return new CinemaResource($cinema);
     }
 
     /**
@@ -57,8 +71,9 @@ class CinemaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Cinema $cinema): Response|JsonResponse
     {
-        //
+        $cinema->delete();
+        return response()->noContent();
     }
 }

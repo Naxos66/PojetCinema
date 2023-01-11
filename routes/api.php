@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\CinemaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,15 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('reservation', App\Http\Controllers\ReservationController::class);
-
 Route::apiResource('film', App\Http\Controllers\FilmController::class);
-
-Route::apiResource('cinema', App\Http\Controllers\CinemaController::class);
-
+Route::apiResource('cinemas', CinemaController::class);
 Route::apiResource('salle', App\Http\Controllers\SalleController::class);
-
 Route::apiResource('seance', App\Http\Controllers\SeanceController::class);
-
 Route::apiResource('friandise', App\Http\Controllers\FriandiseController::class);
 
 Route::group(['prefix' => 'v1'], function (){
