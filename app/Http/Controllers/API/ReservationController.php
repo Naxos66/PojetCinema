@@ -2,8 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Reservation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use App\Http\Resources\ReservationResource;
+use App\Http\Resources\ReservationCollection;
+use App\Http\Requests\ReservationUpdateRequest;
+use LDAP\Result;
 
 class ReservationController extends Controller
 {
@@ -12,9 +19,14 @@ class ReservationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request): ReservationCollection
     {
-        //
+        $queryItems = [];
+        if (count($queryItems) == 0) {
+            return new ReservationCollection(Reservation::paginate());
+        } else {
+            return new ReservationCollection(Reservation::where($queryItems)->paginate());
+        }
     }
 
     /**
@@ -25,7 +37,8 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $reservation = Reservation::create($request->validated());
+        return new ReservationResource($reservation);
     }
 
     /**
@@ -34,9 +47,9 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Reservation $reservation): ReservationResource
     {
-        //
+        return new ReservationResource($reservation);
     }
 
     /**
@@ -46,9 +59,10 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ReservationUpdateRequest $request, Reservation $reservation): JsonResponse|ReservationResource
     {
-        //
+        $reservation->update($request->validated());
+        return new ReservationResource($reservation);
     }
 
     /**
@@ -57,8 +71,9 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Reservation $reservation): Response|JsonResponse
     {
-        //
+        $reservation->delete();
+        return response()->noContent();
     }
 }

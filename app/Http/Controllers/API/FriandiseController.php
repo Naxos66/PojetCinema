@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Friandise;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use App\Http\Resources\FriandiseResource;
+use App\Http\Resources\FriandiseCollection;
+use App\Http\Requests\FriandiseUpdateRequest;
 
 class FriandiseController extends Controller
 {
@@ -12,9 +18,14 @@ class FriandiseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request): FriandiseCollection
     {
-        //
+        $queryItems = [];
+        if (count($queryItems) == 0) {
+            return new FriandiseCollection(Friandise::paginate());
+        } else {
+            return new FriandiseCollection(Friandise::where($queryItems)->paginate());
+        }
     }
 
     /**
@@ -25,7 +36,8 @@ class FriandiseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $friandise = Friandise::create($request->validated());
+        return new FriandiseResource($friandise);
     }
 
     /**
@@ -34,9 +46,9 @@ class FriandiseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Friandise $friandise): FriandiseResource
     {
-        //
+        return new FriandiseResource($friandise);
     }
 
     /**
@@ -46,9 +58,10 @@ class FriandiseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FriandiseUpdateRequest $request, Friandise $friandise): JsonResponse|FriandiseResource
     {
-        //
+        $friandise->update($request->validated());
+        return new FriandiseResource($friandise);
     }
 
     /**
@@ -57,8 +70,9 @@ class FriandiseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Friandise $friandise): Response|JsonResponse
     {
-        //
+        $friandise->delete();
+        return response()->noContent();
     }
 }

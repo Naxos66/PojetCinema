@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Seance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use App\Http\Resources\SeanceResource;
+use App\Http\Resources\SeanceCollection;
+use App\Http\Requests\SeanceUpdateRequest;
 
 class SeanceController extends Controller
 {
@@ -12,9 +18,14 @@ class SeanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request): SeanceCollection
     {
-        //
+        $queryItems = [];
+        if (count($queryItems) == 0) {
+            return new SeanceCollection(Seance::paginate());
+        } else {
+            return new SeanceCollection(Seance::where($queryItems)->paginate());
+        }
     }
 
     /**
@@ -25,7 +36,8 @@ class SeanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $seance = Seance::create($request->validated());
+        return new SeanceResource($seance);
     }
 
     /**
@@ -34,9 +46,9 @@ class SeanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Seance $seance): SeanceResource
     {
-        //
+        return new SeanceResource($seance);
     }
 
     /**
@@ -46,9 +58,10 @@ class SeanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SeanceUpdateRequest $request, Seance $seance): JsonResponse|SeanceResource
     {
-        //
+        $seance->update($request->validated());
+        return new SeanceResource($seance);
     }
 
     /**
@@ -57,8 +70,9 @@ class SeanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Seance $seance): Response|JsonResponse
     {
-        //
+        $seance->delete();
+        return response()->noContent();
     }
 }

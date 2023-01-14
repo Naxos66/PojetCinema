@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Film;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use App\Http\Resources\FilmResource;
+use App\Http\Resources\FilmCollection;
+use App\Http\Requests\FilmUpdateRequest;
 
 class FilmController extends Controller
 {
@@ -12,9 +18,14 @@ class FilmController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request): FilmCollection
     {
-        //
+        $queryItems = [];
+        if (count($queryItems) == 0) {
+            return new FilmCollection(Film::paginate());
+        } else {
+            return new FilmCollection(Film::where($queryItems)->paginate());
+        }
     }
 
     /**
@@ -25,7 +36,8 @@ class FilmController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $film = Film::create($request->validated());
+        return new FilmResource($film);
     }
 
     /**
@@ -34,9 +46,9 @@ class FilmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Film $film): FilmResource
     {
-        //
+        return new FilmResource($film);
     }
 
     /**
@@ -46,9 +58,10 @@ class FilmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FilmUpdateRequest $request, Film $film): JsonResponse|FilmResource
     {
-        //
+        $film->update($request->validated());
+        return new FilmResource($film);
     }
 
     /**
@@ -57,8 +70,9 @@ class FilmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Film $film): Response|JsonResponse
     {
-        //
+        $film->delete();
+        return response()->noContent();
     }
 }
