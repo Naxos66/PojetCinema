@@ -23,7 +23,13 @@ class CinemaResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')->required(),
+                Forms\Components\TextInput::make('name')->required(),
+                Forms\Components\TextInput::make('address')->required(),
+                Forms\Components\TextInput::make('city')->required(),
+                Forms\Components\TextInput::make('zipcode')->required(),
+                Forms\Components\TextInput::make('phone')->required(),
+                Forms\Components\TextInput::make('email')->required()
             ]);
     }
 
@@ -31,7 +37,13 @@ class CinemaResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('id')->limit('20')->sortable(),
+                Tables\Columns\TextColumn::make('name')->limit('30'),
+                Tables\Columns\TextColumn::make('address')->limit('30'),
+                Tables\Columns\TextColumn::make('city')->limit('20'),
+                Tables\Columns\TextColumn::make('zipcode')->limit('10'),
+                Tables\Columns\TextColumn::make('phone')->limit('20'),
+                Tables\Columns\TextColumn::make('email')->limit('100')
             ])
             ->filters([
                 //
@@ -43,14 +55,14 @@ class CinemaResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -58,5 +70,5 @@ class CinemaResource extends Resource
             'create' => Pages\CreateCinema::route('/create'),
             'edit' => Pages\EditCinema::route('/{record}/edit'),
         ];
-    }    
+    }
 }

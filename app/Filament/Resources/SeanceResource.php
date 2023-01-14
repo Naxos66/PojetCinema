@@ -36,8 +36,8 @@ class SeanceResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id')->limit('20')->sortable(),
                 Tables\Columns\TextColumn::make('date')->limit('20'),
-                Tables\Columns\TextColumn::make('price')->limit('50')>sortable(),
-                Tables\Columns\TextColumn::make('salle_id')->limit('20')>sortable(),
+                Tables\Columns\TextColumn::make('price')->limit('10')-> sortable(),
+                Tables\Columns\TextColumn::make('salle_id')->limit('20')->sortable(),
                 Tables\Columns\TextColumn::make('film_id')->limit('20')->sortable()
             ])
             ->filters([

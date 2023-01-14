@@ -2,15 +2,18 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Pages\Page;
+use Illuminate\Support\Facades\Hash;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Resources\Form;
+use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use phpseclib3\Crypt\Hash;
 
 class UserResource extends Resource
 {
@@ -24,7 +27,11 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')->required(),
                 Forms\Components\TextInput::make('email')->required(),
-                Forms\Components\TextInput::make('password')->required()
+                Forms\Components\TextInput::make('password')
+                    ->password()
+                    ->minLength(8)
+                    ->dehydrateStateUsing(fn($state) => Hash::make($state))
+                    ->dehydrated(fn($state) => filled($state))
             ]);
     }
 
@@ -36,7 +43,8 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('name')->limit('20'),
                 Tables\Columns\TextColumn::make('email')->limit('50'),
                 Tables\Columns\TextColumn::make('password')->limit('20'),
-                Tables\Columns\TextColumn::make('role')->limit('20')->sortable(),
+                Tables\Columns\BooleanColumn::make('role')->label('Admin')
+
             ])
             ->filters([
                 //
@@ -64,4 +72,5 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+
 }

@@ -23,8 +23,8 @@ class FilmResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextColumn::make('title')->required(),
-                Forms\Components\TextColumn::make('time')->required()
+                Forms\Components\TextInput::make('title')->required(),
+                Forms\Components\TextInput::make('time')->required()
             ]);
     }
 
