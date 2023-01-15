@@ -41,7 +41,7 @@ class SallePolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $user->role == 1;
     }
 
     /**
@@ -53,7 +53,7 @@ class SallePolicy
      */
     public function update(User $user, Salle $salle)
     {
-        return true;
+        return $user->role == 1;
     }
 
     /**
@@ -65,7 +65,7 @@ class SallePolicy
      */
     public function delete(User $user, Salle $salle)
     {
-        return true;
+        return $user->role == 1;
     }
 
     /**

@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Resources\ReservationResource;
 use App\Http\Resources\ReservationCollection;
 use App\Http\Requests\ReservationUpdateRequest;
-use LDAP\Result;
+
 
 class ReservationController extends Controller
 {

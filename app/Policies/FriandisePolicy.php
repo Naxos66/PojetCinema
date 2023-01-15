@@ -41,7 +41,7 @@ class FriandisePolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $user->role == 1;
     }
 
     /**
@@ -53,7 +53,7 @@ class FriandisePolicy
      */
     public function update(User $user, Friandise $friandise)
     {
-        return true;
+        return $user->role == 1;
     }
 
     /**

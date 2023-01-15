@@ -53,7 +53,7 @@ class ReservationPolicy
      */
     public function update(User $user, Reservation $reservation)
     {
-        return true;
+        return $user->role == 1;
     }
 
     /**
@@ -65,7 +65,7 @@ class ReservationPolicy
      */
     public function delete(User $user, Reservation $reservation)
     {
-        return true;
+        return $user->role == 1;
     }
 
     /**

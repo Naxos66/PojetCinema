@@ -41,7 +41,7 @@ class FilmPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $user->role == 1;
     }
 
     /**
@@ -53,7 +53,7 @@ class FilmPolicy
      */
     public function update(User $user, Film $film)
     {
-        return true;
+        return $user->role == 1;
     }
 
     /**
@@ -65,7 +65,7 @@ class FilmPolicy
      */
     public function delete(User $user, Film $film)
     {
-        return true;
+        return $user->role == 1;
     }
 
     /**
